@@ -30,7 +30,8 @@ export class UserService {
     return this.db;
   };
 
-  deleteUser = () => {
-    return this.db;
+  deleteUser = (name: string) => {
+    this.db = this.db.filter((u) => u.name != name);
+    return;
   };
 }

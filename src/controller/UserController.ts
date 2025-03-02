@@ -13,6 +13,10 @@ export class UserController {
       response.status(400).json({ message: "Bad request: nome obrigatório" });
       return;
     }
+    if (!user.email) {
+      response.status(400).json({ message: "Bad request: email obrigatório" });
+      return;
+    }
 
     this.userService.createUser(user.nome, user.email);
     response.status(201).json({ message: "usuário criado" });
@@ -26,7 +30,12 @@ export class UserController {
   };
 
   deleteUser = (request: Request, response: Response) => {
-    const users = this.userService.deleteUser();
+    const user = request.body;
+    if (!user.nome) {
+      response.status(400).json({ message: "Bad request: nome obrigatório" });
+      return;
+    }
+    this.userService.deleteUser(user.nome);
     response.status(200).json({ message: "usuário deletado" });
     return;
   };
